@@ -39,7 +39,7 @@ function App(){
  const ctx=useRef(null),bgm=useRef(null);
  useEffect(()=>save(store),[store]);
  useEffect(()=>{
-   if(!bgm.current){bgm.current=new Audio('/bgm.mp3');bgm.current.loop=true;bgm.current.volume=.28}
+   if(!bgm.current){bgm.current=new Audio('/bgm.mp3');bgm.current.loop=true;bgm.current.volume=.12}
    if(audio&&screen!=='splash'){bgm.current.play().catch(()=>{})}else{bgm.current.pause()}
    return()=>{}
  },[audio,screen]);
@@ -83,6 +83,27 @@ const tone=(f=250,d=.06,type='sine',vol=.10,delay=0)=>{
   o.stop(start+d+.02);
 };
 
+const fadeBgm=(target,duration=500)=>{
+  const a=bgm.current;
+  if(!a)return;
+
+  const start=a.volume;
+  const diff=target-start;
+  const steps=20;
+  const interval=duration/steps;
+  let i=0;
+
+  const timer=setInterval(()=>{
+    i++;
+    a.volume=Math.max(0,Math.min(1,start+(diff*(i/steps))));
+
+    if(i>=steps){
+      clearInterval(timer);
+      a.volume=target;
+    }
+  },interval);
+};
+
 const noise=(duration=.25,volume=.08,delay=0)=>{
   const c=getCtx();
   if(!c)return;
@@ -118,21 +139,21 @@ const noise=(duration=.25,volume=.08,delay=0)=>{
 
 // 1. Tekan mohor / mula cabutan
 const sfxVoteStart=()=>{
-  tone(420,.09,'triangle',.10);
-  tone(660,.12,'triangle',.08,.07);
+  tone(520,.10,'triangle',.28);
+  tone(760,.14,'triangle',.20,.06);
 };
 
 // 2. Tick semasa proses cabutan
 const sfxShuffle=()=>{
-  tone(760,.035,'square',.035);
+  tone(880,.05,'square',.13);
 };
 
 // 3. Lima skrol muncul
 const sfxScrollAppear=()=>{
-  noise(.35,.07);
-  tone(190,.28,'triangle',.045);
-  tone(285,.30,'triangle',.035,.07);
-  tone(380,.32,'triangle',.03,.14);
+  noise(.40,.20);
+  tone(180,.30,'triangle',.14);
+  tone(300,.32,'triangle',.12,.08);
+  tone(430,.35,'triangle',.10,.16);
 };
 
 // 4. Hentakan mohor
@@ -140,7 +161,7 @@ const sfxStamp=()=>{
   const c=getCtx();
   if(!c)return;
 
-  noise(.12,.14);
+  noise(.16,.30);
 
   const o=c.createOscillator();
   const g=c.createGain();
@@ -149,7 +170,7 @@ const sfxStamp=()=>{
   o.frequency.setValueAtTime(105,c.currentTime);
   o.frequency.exponentialRampToValueAtTime(45,c.currentTime+.25);
 
-  g.gain.setValueAtTime(.28,c.currentTime);
+  g.gain.setValueAtTime(.55,c.currentTime);
   g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.28);
 
   o.connect(g);
@@ -162,6 +183,9 @@ const sfxStamp=()=>{
  const draw=async()=>{
   if(stage!=='ready')return;
 
+  // turunkan background music masa cabutan bermula
+  fadeBgm(.04,500);
+  
   // tekan butang 抽
   sfxVoteStart();
 
@@ -223,6 +247,10 @@ const sfxStamp=()=>{
   setTimeout(()=>{
     sfxStamp();
   },1700);
+
+  setTimeout(()=>{
+  fadeBgm(.12,900);
+},2300);
 };
  const confirm=()=>{if(store.mode==='official'){const ns={...store,results:{...store.results,[cat]:picked}};setStore(ns)}goHome()};
  const resultFor=k=>store.results[k]===null?null:DATA[k].questions[store.results[k]];
