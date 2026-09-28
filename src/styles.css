@@ -35,7 +35,7 @@ aside button:disabled{opacity:.35;cursor:not-allowed}
 .splash-start{
   position:absolute;
   left:50%;
-  bottom:7vh;
+  bottom:13vh;
   transform:translateX(-50%);
   margin:0;
   min-width:220px;
