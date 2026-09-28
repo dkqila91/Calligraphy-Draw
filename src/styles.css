@@ -42,3 +42,32 @@ aside button:disabled{opacity:.35;cursor:not-allowed}
   font-size:24px;
   z-index:2;
 }
+
+.home,
+.draw,
+.final{
+  position:relative;
+  background-image:url('/app-bg.webp');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  overflow:hidden;
+}
+
+.home::before,
+.draw::before,
+.final::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(238,231,215,.58);
+  pointer-events:none;
+  z-index:0;
+}
+
+.home > *,
+.draw > *,
+.final > *{
+  position:relative;
+  z-index:1;
+}
