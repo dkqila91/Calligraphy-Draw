@@ -20,22 +20,10 @@ aside button:disabled{opacity:.35;cursor:not-allowed}
     no-repeat;
 }
 
-.home,
-.draw,
-.final{
-  background:
-    url('/app-bg.webp')
-    center center / cover
-    no-repeat;
-}
-.splash{
-  position:relative;
-}
-
 .splash-start{
   position:absolute;
   left:50%;
-  bottom:13vh;
+  bottom:20vh;
   transform:translateX(-50%);
   margin:0;
   min-width:220px;
@@ -43,17 +31,18 @@ aside button:disabled{opacity:.35;cursor:not-allowed}
   z-index:2;
 }
 
+/* ===== BACKGROUND APP ===== */
+
 .home,
 .draw,
 .final{
   position:relative;
-  background-image:url('/app-bg.webp');
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
+  isolation:isolate;
+  background:url('/app-bg.webp') center center / cover no-repeat;
   overflow:hidden;
 }
 
+/* overlay lembut */
 .home::before,
 .draw::before,
 .final::before{
@@ -62,12 +51,17 @@ aside button:disabled{opacity:.35;cursor:not-allowed}
   inset:0;
   background:rgba(238,231,215,.58);
   pointer-events:none;
-  z-index:0;
+  z-index:-1;
 }
 
-.home > *,
-.draw > *,
-.final > *{
-  position:relative;
-  z-index:1;
+/* BACK button */
+.draw .back{
+  position:absolute !important;
+  left:3vw;
+  top:35px;
+  z-index:20;
+  border:0;
+  background:transparent;
+  font-size:22px;
+  cursor:pointer;
 }
