@@ -299,7 +299,177 @@ setTimeout(()=>{
     </button>
   </section>
 }
-  {screen==='final'&&<><Header audio={audio} setAudio={setAudio}/><section className="final"><div className="eyebrow red">正式题目</div><h2>2026年书法比赛 · 比赛题目</h2><div className="final-grid">{['B','A'].map(k=><div className="final-panel" key={k}><h3>{DATA[k].group} <span>{DATA[k].years}</span></h3>{resultFor(k)&&<VerticalQuestion q={resultFor(k)} compact/>}</div>)}</div><button className="primary" onClick={()=>setScreen('home')}>返回主页　KEMBALI</button></section></>}
+  {screen==='home'&&<>
+  <Header
+    audio={audio}
+    setAudio={setAudio}
+    onAdmin={()=>setAdmin(true)}
+  />
+
+  <section className="home">
+    <div className="eyebrow red">墨韵启题</div>
+
+    <h2>请选择抽题组别</h2>
+
+    <div className="cats">
+      {['B','A'].map(k=>{
+        let r=resultFor(k);
+
+        return (
+          <button
+            className={'cat '+(r?'locked':'')}
+            key={k}
+            onClick={()=>{
+              if(r)return;
+              setCat(k);
+              setStage('ready');
+              setScreen('draw');
+            }}
+          >
+            <b>{DATA[k].group}</b>
+            <strong>{DATA[k].years}</strong>
+            <span>{DATA[k].ms}</span>
+
+            <i>
+              {r
+                ? `✓ 已确定 · 《${r.title}》`
+                : '点击进入'}
+            </i>
+          </button>
+        );
+      })}
+    </div>
+
+    <div className={'mode-badge '+store.mode}>
+      {store.mode==='demo'
+        ? '演示模式'
+        : '正式模式'}
+    </div>
+
+    <button
+      className="primary finalbtn"
+      disabled={
+        store.results.B===null ||
+        store.results.A===null
+      }
+      onClick={()=>setScreen('final')}
+    >
+      双题展示
+    </button>
+
+    <small className="finalhint">
+      {store.results.B!==null &&
+       store.results.A!==null
+        ? '乙组与甲组题目已就绪'
+        : '请先完成两个组别的正式抽题'}
+    </small>
+  </section>
+</>}
+
+
+{screen==='draw'&&cat&&
+  <section className="draw">
+
+    <button className="back" onClick={goHome}>
+      ← 返回
+    </button>
+
+    <div className="group-title">
+      <b>{DATA[cat].group}</b>
+      <span>{DATA[cat].years}</span>
+    </div>
+
+    {stage==='ready'&&
+      <div className="ready">
+        <h2>五题 · 取其一</h2>
+
+        <Seal onClick={draw}/>
+
+        <h3>点击印章开始抽题</h3>
+
+        <span className={'mode-badge '+store.mode}>
+          {store.mode==='demo'
+            ? '演示模式'
+            : '正式模式'}
+        </span>
+      </div>
+    }
+
+    {stage==='stamp'&&
+      <div className="stamp-stage">
+        <Seal disabled label="抽"/>
+        <h2>启题</h2>
+      </div>
+    }
+
+    {stage==='shuffle'&&
+      <div className="shuffle">
+
+        <h2>墨韵流转 · 静候题定</h2>
+
+        <div className="scrolls">
+          {'一二三四五'.split('').map((n,i)=>
+            <div
+              key={n}
+              className={'scroll '+(active===i?'active':'')}
+            >
+              <div className="rod top"/>
+
+              <b>{n}</b>
+
+              <small>
+                卷<br/>轴
+              </small>
+
+              <div className="rod bottom"/>
+            </div>
+          )}
+        </div>
+
+        <p>正在抽取比赛题目…</p>
+
+      </div>
+    }
+
+    {stage==='reveal'&&picked!==null&&
+      <div className="reveal-stage">
+
+        <div className="winner-scroll">
+          <div className="scroll-cap top"/>
+
+          <VerticalQuestion
+            q={DATA[cat].questions[picked]}
+            reveal
+          />
+
+          <div className="scroll-cap bottom"/>
+        </div>
+
+        <div className="result-seal">
+          题目<br/>确定
+        </div>
+
+        <div className="selected-label">
+          {store.mode==='demo'
+            ? '演示题目已选定'
+            : '正式题目已选定'}
+        </div>
+
+        <button
+          className="primary"
+          onClick={confirm}
+        >
+          {store.mode==='demo'
+            ? '完成演示'
+            : '确认题目'}
+        </button>
+
+      </div>
+    }
+
+  </section>
+}
+  {screen==='final'&&<><Header audio={audio} setAudio={setAudio}/><section className="final"><div className="eyebrow red">正式题目</div><h2>2026年书法比赛 · 比赛题目</h2><div className="final-grid">{['B','A'].map(k=><div className="final-panel" key={k}><h3>{DATA[k].group} <span>{DATA[k].years}</span></h3>{resultFor(k)&&<VerticalQuestion q={resultFor(k)} compact/>}</div>)}</div><button className="primary" onClick={()=>setScreen('home')}>返回主页</button></section></>}
   {admin&&<Admin store={store} setStore={setStore} preview={preview} setPreview={setPreview} close={()=>setAdmin(false)} audio={audio} setAudio={setAudio}/>} 
  </main>
 }
