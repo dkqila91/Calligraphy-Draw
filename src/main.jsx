@@ -45,15 +45,185 @@ function App(){
  },[audio,screen]);
  useEffect(()=>{const f=()=>setScreen('final');document.addEventListener('show-final',f);return()=>document.removeEventListener('show-final',f)},[]);
  const enterApp=()=>{setScreen('home');setTimeout(()=>{if(audio)bgm.current?.play().catch(()=>{})},60)};
- const tone=(f=250,d=.06,type='wood')=>{if(!audio)return;try{ctx.current??=new(window.AudioContext||window.webkitAudioContext)();const c=ctx.current,o=c.createOscillator(),g=c.createGain();o.type=type==='wood'?'sine':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.10,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch{}};
+ const getCtx=()=>{
+  if(!audio)return null;
+
+  try{
+    ctx.current??=new(window.AudioContext||window.webkitAudioContext)();
+
+    if(ctx.current.state==='suspended'){
+      ctx.current.resume();
+    }
+
+    return ctx.current;
+  }catch{
+    return null;
+  }
+};
+
+const tone=(f=250,d=.06,type='sine',vol=.10,delay=0)=>{
+  const c=getCtx();
+  if(!c)return;
+
+  const o=c.createOscillator();
+  const g=c.createGain();
+  const start=c.currentTime+delay;
+
+  o.type=type;
+  o.frequency.setValueAtTime(f,start);
+
+  g.gain.setValueAtTime(.0001,start);
+  g.gain.exponentialRampToValueAtTime(vol,start+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,start+d);
+
+  o.connect(g);
+  g.connect(c.destination);
+
+  o.start(start);
+  o.stop(start+d+.02);
+};
+
+const noise=(duration=.25,volume=.08,delay=0)=>{
+  const c=getCtx();
+  if(!c)return;
+
+  const length=Math.floor(c.sampleRate*duration);
+  const buffer=c.createBuffer(1,length,c.sampleRate);
+  const data=buffer.getChannelData(0);
+
+  for(let i=0;i<length;i++){
+    data[i]=(Math.random()*2-1)*(1-i/length);
+  }
+
+  const source=c.createBufferSource();
+  const gain=c.createGain();
+  const filter=c.createBiquadFilter();
+
+  filter.type='lowpass';
+  filter.frequency.value=1200;
+
+  source.buffer=buffer;
+
+  const start=c.currentTime+delay;
+
+  gain.gain.setValueAtTime(volume,start);
+  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
+
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(c.destination);
+
+  source.start(start);
+};
+
+// 1. Tekan mohor / mula cabutan
+const sfxVoteStart=()=>{
+  tone(420,.09,'triangle',.10);
+  tone(660,.12,'triangle',.08,.07);
+};
+
+// 2. Tick semasa proses cabutan
+const sfxShuffle=()=>{
+  tone(760,.035,'square',.035);
+};
+
+// 3. Lima skrol muncul
+const sfxScrollAppear=()=>{
+  noise(.35,.07);
+  tone(190,.28,'triangle',.045);
+  tone(285,.30,'triangle',.035,.07);
+  tone(380,.32,'triangle',.03,.14);
+};
+
+// 4. Hentakan mohor
+const sfxStamp=()=>{
+  const c=getCtx();
+  if(!c)return;
+
+  noise(.12,.14);
+
+  const o=c.createOscillator();
+  const g=c.createGain();
+
+  o.type='sine';
+  o.frequency.setValueAtTime(105,c.currentTime);
+  o.frequency.exponentialRampToValueAtTime(45,c.currentTime+.25);
+
+  g.gain.setValueAtTime(.28,c.currentTime);
+  g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.28);
+
+  o.connect(g);
+  g.connect(c.destination);
+
+  o.start();
+  o.stop(c.currentTime+.30);
+};
  const goHome=()=>{setStage('ready');setPicked(null);setCat(null);setScreen('home')};
  const draw=async()=>{
-  if(stage!=='ready')return; setStage('stamp');tone(95,.28); await sleep(250);setInk(true);await sleep(650);setStage('shuffle');setInk(false);
-  const winner=rand5(); let seq=[]; for(let n=0;n<28;n++)seq.push(55+n*n*1.55);
-  let pos=0;for(const d of seq){pos=(pos+1)%5;setActive(pos);tone(330,.025);await sleep(d)}
-  while(pos!==winner){pos=(pos+1)%5;setActive(pos);tone(300,.03);await sleep(360)}
-  setPicked(winner);tone(120,.35);await sleep(700);setStage('reveal');
- };
+  if(stage!=='ready')return;
+
+  // tekan butang 抽
+  sfxVoteStart();
+
+  setStage('stamp');
+
+  // mohor pertama menghentak
+  setTimeout(()=>{
+    sfxStamp();
+  },120);
+
+  await sleep(250);
+
+  setInk(true);
+  await sleep(650);
+
+  // lima skrol muncul
+  setStage('shuffle');
+  setInk(false);
+  sfxScrollAppear();
+
+  const winner=rand5();
+
+  let seq=[];
+  for(let n=0;n<28;n++){
+    seq.push(55+n*n*1.55);
+  }
+
+  let pos=0;
+
+  // proses undian laju → perlahan
+  for(const d of seq){
+    pos=(pos+1)%5;
+    setActive(pos);
+
+    sfxShuffle();
+
+    await sleep(d);
+  }
+
+  // sampai tepat pada soalan yang telah dipilih
+  while(pos!==winner){
+    pos=(pos+1)%5;
+    setActive(pos);
+
+    sfxShuffle();
+
+    await sleep(360);
+  }
+
+  setPicked(winner);
+
+  await sleep(700);
+
+  // buka skrol keputusan
+  setStage('reveal');
+
+  // CSS result-seal kau mempunyai delay 1.7s,
+  // jadi bunyi hentakan diselaraskan dengan cop visual
+  setTimeout(()=>{
+    sfxStamp();
+  },1700);
+};
  const confirm=()=>{if(store.mode==='official'){const ns={...store,results:{...store.results,[cat]:picked}};setStore(ns)}goHome()};
  const resultFor=k=>store.results[k]===null?null:DATA[k].questions[store.results[k]];
  return <main>
