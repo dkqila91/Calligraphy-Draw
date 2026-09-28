@@ -292,13 +292,13 @@ setTimeout(()=>{
  const resultFor=k=>store.results[k]===null?null:DATA[k].questions[store.results[k]];
  return <main>
   <div className="paper-noise"/><div className={'ink-wash '+(ink?'burst':'')}/><div className="corner-stamp"/>
-  {screen==='splash'&&<section className="splash"><div className="brush-dot"/><div className="eyebrow">书法 · 2026年</div><h1>书法比赛</h1><div className="brushline"/><h2>墨韵启题</h2><p className="cnspace">比赛题目抽选仪式</p><p>Gimik Pemilihan Soalan Pertandingan Kaligrafi Cina</p><button className="primary" onClick={enterApp}>进入抽题仪式　<span>MULA</span></button></section>}
-  {screen==='home'&&<><Header audio={audio} setAudio={setAudio} onAdmin={()=>setAdmin(true)}/><section className="home"><div className="eyebrow red">墨韵启题</div><h2>请选择抽题组别</h2><p>Pilih kategori untuk memulakan pemilihan soalan</p><div className="cats">{['B','A'].map(k=>{let r=resultFor(k);return <button className={'cat '+(r?'locked':'')} key={k} onClick={()=>{if(r)return;setCat(k);setStage('ready');setScreen('draw')}}><b>{DATA[k].group}</b><strong>{DATA[k].years}</strong><span>{DATA[k].ms}</span><i>{r?`✓ 已确定 · 《${r.title}》`:'点击进入 · TEKAN UNTUK MASUK'}</i></button>})}</div><div className={'mode-badge '+store.mode}>{store.mode==='demo'?'演示模式 · DEMO MODE':'正式模式 · OFFICIAL MODE'}</div><button className="primary finalbtn" disabled={store.results.B===null||store.results.A===null} onClick={()=>setScreen('final')}>双题展示 · PAPARKAN 2 SOALAN DIPILIH</button><small className="finalhint">{store.results.B!==null&&store.results.A!==null?'乙组与甲组题目已就绪 · Kedua-dua soalan sedia dipaparkan':'Selesaikan cabutan rasmi bagi kedua-dua kategori dahulu'}</small></section></>}
-  {screen==='draw'&&cat&&<section className="draw"><button className="back" onClick={goHome}>← 返回</button><div className="group-title"><b>{DATA[cat].group}</b><span>{DATA[cat].years}</span></div>{stage==='ready'&&<div className="ready"><h2>五题 · 取其一</h2><p>5 SOALAN · 1 AKAN DIPILIH</p><Seal onClick={draw}/><h3>点击印章开始抽题</h3><p>Tekan mohor untuk memulakan pemilihan</p><span className={'mode-badge '+store.mode}>{store.mode==='demo'?'演示模式 · DEMO':'正式模式 · OFFICIAL'}</span></div>}
-   {stage==='stamp'&&<div className="stamp-stage"><Seal disabled label="抽"/><h2>启题</h2></div>}
-   {stage==='shuffle'&&<div className="shuffle"><h2>墨韵流转 · 静候题定</h2><div className="scrolls">{'一二三四五'.split('').map((n,i)=><div key={n} className={'scroll '+(active===i?'active':'')}><div className="rod top"/><b>{n}</b><small>卷<br/>轴</small><div className="rod bottom"/></div>)}</div><p>正在抽取比赛题目…</p></div>}
-   {stage==='reveal'&&picked!==null&&<div className="reveal-stage"><div className="winner-scroll"><div className="scroll-cap top"/><VerticalQuestion q={DATA[cat].questions[picked]} reveal/><div className="scroll-cap bottom"/></div><div className="result-seal">题目<br/>确定</div><div className="selected-label">{store.mode==='demo'?'SOALAN DEMO DIPILIH':'SOALAN RASMI DIPILIH'}</div><button className="primary" onClick={confirm}>{store.mode==='demo'?'完成演示　SELESAI DEMO':'确认题目　SAHKAN SOALAN'}</button></div>}
-  </section>}
+  {screen==='splash'&&
+  <section className="splash">
+    <button className="primary splash-start" onClick={enterApp}>
+      开始抽题
+    </button>
+  </section>
+}
   {screen==='final'&&<><Header audio={audio} setAudio={setAudio}/><section className="final"><div className="eyebrow red">正式题目</div><h2>2026年书法比赛 · 比赛题目</h2><div className="final-grid">{['B','A'].map(k=><div className="final-panel" key={k}><h3>{DATA[k].group} <span>{DATA[k].years}</span></h3>{resultFor(k)&&<VerticalQuestion q={resultFor(k)} compact/>}</div>)}</div><button className="primary" onClick={()=>setScreen('home')}>返回主页　KEMBALI</button></section></>}
   {admin&&<Admin store={store} setStore={setStore} preview={preview} setPreview={setPreview} close={()=>setAdmin(false)} audio={audio} setAudio={setAudio}/>} 
  </main>
