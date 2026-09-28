@@ -4,14 +4,14 @@ import{Volume2,VolumeX,Maximize,Settings,X,ChevronLeft,ChevronRight,Eye,RotateCc
 import'./styles.css';
 
 const DATA={
- B:{group:'乙组',years:'三、四年级',ms:'Tahun 3 & Tahun 4',questions:[
+ B:{group:'乙组',years:'三、四年级',questions:[
   {title:'静夜思',author:'李白',lines:['床前明月光，','疑是地上霜。','举头望明月，','低头思故乡。']},
   {title:'相思',author:'王维',lines:['红豆生南国，','春来发几枝。','愿君多采撷，','此物最相思。']},
   {title:'鹿柴',author:'王维',lines:['空山不见人，','但闻人语响。','返景入深林，','复照青苔上。']},
   {title:'乐游原',author:'李商隐',lines:['向晚意不适，','驱车登古原。','夕阳无限好，','只是近黄昏。']},
   {title:'所见',author:'袁枚',lines:['牧童骑黄牛，','歌声振林樾。','意欲捕鸣蝉，','忽然闭口立。']}
  ]},
- A:{group:'甲组',years:'五、六年级',ms:'Tahun 5 & Tahun 6',questions:[
+ A:{group:'甲组',years:'五、六年级',questions:[
   {title:'江上渔者',author:'范仲淹',lines:['江上往来人，','但爱鲈鱼美。','君看一叶舟，','出没风波里。']},
   {title:'风',author:'李峤',lines:['解落三秋叶，','能开二月花。','过江千尺浪，','入竹万竿斜。']},
   {title:'塞下曲',author:'卢纶',lines:['月黑雁飞高，','单于夜遁逃。','欲将轻骑逐，','大雪满弓刀。']},
