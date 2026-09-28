@@ -157,27 +157,63 @@ const sfxScrollAppear=()=>{
 };
 
 // 4. Hentakan mohor
-const sfxStamp=()=>{
-  const c=getCtx();
+const sfxStamp=async()=>{
+  const c=await getCtx();
   if(!c)return;
 
-  noise(.16,.30);
+  // hentakan pendek / impact
+  noise(.20,.42);
 
-  const o=c.createOscillator();
-  const g=c.createGain();
+  // bass utama
+  const o1=c.createOscillator();
+  const g1=c.createGain();
 
-  o.type='sine';
-  o.frequency.setValueAtTime(105,c.currentTime);
-  o.frequency.exponentialRampToValueAtTime(45,c.currentTime+.25);
+  o1.type='sine';
+  o1.frequency.setValueAtTime(125,c.currentTime);
+  o1.frequency.exponentialRampToValueAtTime(38,c.currentTime+.42);
 
-  g.gain.setValueAtTime(.55,c.currentTime);
-  g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.28);
+  g1.gain.setValueAtTime(.78,c.currentTime);
+  g1.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.45);
 
-  o.connect(g);
-  g.connect(c.destination);
+  o1.connect(g1);
+  g1.connect(c.destination);
 
-  o.start();
-  o.stop(c.currentTime+.30);
+  o1.start();
+  o1.stop(c.currentTime+.46);
+
+  // lapisan hentakan kedua supaya lebih berat
+  const o2=c.createOscillator();
+  const g2=c.createGain();
+
+  o2.type='triangle';
+  o2.frequency.setValueAtTime(72,c.currentTime);
+  o2.frequency.exponentialRampToValueAtTime(32,c.currentTime+.32);
+
+  g2.gain.setValueAtTime(.52,c.currentTime);
+  g2.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.36);
+
+  o2.connect(g2);
+  g2.connect(c.destination);
+
+  o2.start();
+  o2.stop(c.currentTime+.38);
+};
+ const sfxScrollOpen=async()=>{
+  const c=await getCtx();
+  if(!c)return;
+
+  // bunyi geseran / kertas terbuka
+  noise(.85,.15);
+
+  // tonal rise
+  tone(160,.45,'triangle',.12);
+  tone(230,.50,'triangle',.11,.08);
+  tone(330,.55,'triangle',.10,.16);
+  tone(460,.60,'sine',.09,.26);
+
+  // bunyi akhir yang lebih ceremonial
+  tone(620,.75,'sine',.08,.38);
+  tone(930,.70,'sine',.055,.42);
 };
  const goHome=()=>{setStage('ready');setPicked(null);setCat(null);setScreen('home')};
  const draw=async()=>{
@@ -241,12 +277,12 @@ const sfxStamp=()=>{
 
   // buka skrol keputusan
   setStage('reveal');
+  sfxScrollOpen();
 
-  // CSS result-seal kau mempunyai delay 1.7s,
-  // jadi bunyi hentakan diselaraskan dengan cop visual
-  setTimeout(()=>{
-    sfxStamp();
-  },1700);
+  // mohor 题目确定
+setTimeout(()=>{
+  sfxStamp();
+},1700);
 
   setTimeout(()=>{
   fadeBgm(.12,900);
