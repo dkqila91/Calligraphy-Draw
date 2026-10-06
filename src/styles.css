@@ -16,7 +16,7 @@ header{height:100px;margin:0 5vw;border-bottom:1px solid #9d907b;display:flex;al
   flex-direction:column;
   align-items:center;
   justify-content:flex-start;
-  padding:10vh 5vw 4vh;
+  padding:7vh 5vw 3vh;
   position:relative;
   isolation:isolate;
   background:url('/app-bg.webp') center center / cover no-repeat;
@@ -25,7 +25,7 @@ header{height:100px;margin:0 5vw;border-bottom:1px solid #9d907b;display:flex;al
 
 .home h2{
   font-size:clamp(46px,4.5vw,72px);
-  margin:2vh 0 5vh;
+  margin:2vh 0 3vh;
 }
 .home>p{font-size:22px}
 .cats{
@@ -158,8 +158,8 @@ body{
 .home,
 .final{
   width:100vw;
-  height:calc(100vh - 100px);
-  min-height:calc(100vh - 100px);
+  height:100vh;
+  min-height:100vh;
   overflow:hidden;
 }
 
