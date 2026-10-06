@@ -1390,3 +1390,20 @@ aside hr{
     overflow:auto;
   }
 }
+
+/* BESARKAN TULISAN DALAM MOHOR */
+.seal{
+  font-size:clamp(125px,15vh,160px);
+  font-weight:900;
+  line-height:1;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.seal span{
+  font-size:inherit !important;
+  font-weight:inherit;
+  line-height:1;
+}
