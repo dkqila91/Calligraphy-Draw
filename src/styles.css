@@ -500,23 +500,19 @@ header small{
 
 .group-title{
   display:flex;
-
   justify-content:center;
-
-  gap:30px;
-
+  gap:36px;
   align-items:baseline;
-
   margin-top:1vh;
   margin-bottom:1vh;
 }
 
 .group-title b{
-  font-size:clamp(48px,4vw,64px);
+  font-size:clamp(58px,4.8vw,78px);
 }
 
 .group-title span{
-  font-size:clamp(22px,2vw,30px);
+  font-size:clamp(28px,2.4vw,36px);
 }
 
 
@@ -527,83 +523,34 @@ header small{
 .ready{
   display:flex;
   flex-direction:column;
-
   align-items:center;
 }
 
 .ready h2{
-  font-size:clamp(36px,3.5vw,58px);
-
-  margin:2vh 0 1vh;
+  font-size:clamp(40px,3.8vw,62px);
+  margin:2vh 0 3vh;
 }
-
-.ready > p{
-  font-size:22px;
-}
-
-
-/* mohor besar */
 
 .seal{
   width:min(320px,27vh);
   height:min(320px,27vh);
-
-  margin:3vh auto 2vh;
-
+  margin:7vh auto 2.5vh;
   border:10px double #8e1f18;
-
   background:#a9271f;
   color:#f5e9cf;
-
-  box-shadow:
-    0 18px 30px
-    rgba(107,33,28,.19);
-
+  box-shadow:0 18px 30px rgba(107,33,28,.19);
   transform:rotate(-4deg);
-
   cursor:pointer;
-
   display:block;
-
-  transition:
-    transform .15s,
-    box-shadow .15s;
+  transition:transform .15s, box-shadow .15s;
 }
-
-.seal:hover{
-  transform:rotate(-4deg) scale(1.05);
-
-  box-shadow:
-    0 25px 40px
-    rgba(107,33,28,.25);
-}
-
-.seal:active,
-.stamp-stage .seal{
-  animation:
-    stamp .45s
-    cubic-bezier(.2,.8,.2,1);
-}
-
-.seal span{
-  font-size:
-    clamp(105px,13vh,145px);
-
-  font-weight:900;
-}
-
-
-/* arahan bawah */
 
 .ready h3{
-  margin:1vh 0 .8vh;
+  margin:2vh 0 1vh;
 }
 
-
-/* mode lebih bawah */
-
 .ready .mode-badge{
-  margin-top:3vh;
+  margin-top:4vh;
 }
 
 
