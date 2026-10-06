@@ -99,11 +99,11 @@ body{
 
 /* tajuk kategori */
 .group-title b{
-  font-size:clamp(42px,4vw,64px);
+  font-size:clamp(48px,4vw,64px);
 }
 
 .group-title span{
-  font-size:clamp(20px,2vw,28px);
+  font-size:clamp(22px,2vw,30px);
 }
 
 /* screen sebelum cabutan */
@@ -114,13 +114,13 @@ body{
 
 /* mohor */
 .seal{
-  width:min(200px,18vh);
-  height:min(200px,18vh);
+  width:min(320px,27vh);
+  height:min(320px,27vh);
   margin:3vh auto 2vh;
 }
 
 .seal span{
-  font-size:clamp(68px,9vh,105px);
+  font-size:clamp(105px,13vh,145px);
 }
 
 /* lima scroll */
@@ -211,4 +211,46 @@ body{
 .compact .vcol.c0{
   font-size:clamp(21px,1.65vw,28px);
   margin-top:0;
+}
+
+/* ===== POSITION DRAW SCREEN ===== */
+
+.draw{
+  height:100vh;
+  min-height:100vh;
+  padding:4vh 5vw 3vh;
+  overflow:hidden;
+}
+
+/* tajuk kategori */
+.group-title{
+  margin-top:1vh;
+  margin-bottom:1vh;
+}
+
+/* keseluruhan kandungan sebelum cabutan */
+.ready{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* 五题 · 取其一 */
+.ready h2{
+  margin:2vh 0 1vh;
+}
+
+/* mohor */
+.ready .seal{
+  margin:3vh auto 2vh;
+}
+
+/* arahan bawah mohor */
+.ready h3{
+  margin:1vh 0 1.5vh;
+}
+
+/* mode */
+.ready .mode-badge{
+  margin-top:1vh;
 }
