@@ -1092,7 +1092,7 @@ header small{
 
 .compact .vcol{
   font-size:
-    clamp(40px,2.8vw,50px);
+    clamp(42px,2.8vw,52px);
 
   line-height:1;
 }
