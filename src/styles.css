@@ -508,11 +508,11 @@ header small{
 }
 
 .group-title b{
-  font-size:clamp(58px,4.8vw,78px);
+  font-size:clamp(68px,5.4vw,90px);
 }
 
 .group-title span{
-  font-size:clamp(28px,2.4vw,36px);
+  font-size:clamp(32px,2.8vw,42px);
 }
 
 
@@ -718,54 +718,30 @@ header small{
 }
 
 .winner-scroll{
-  position:relative;
-
-  width:min(720px,55vw);
-
-  height:54vh;
-  max-height:590px;
-
+  width:min(860px,62vw);
+  height:58vh;
+  max-height:680px;
   margin:0 auto;
-
+  position:relative;
+  background:linear-gradient(90deg,#e9dbb9,#fff8e8 12%,#f8efd9 88%,#e4d1a8);
+  box-shadow:0 22px 45px rgba(60,41,24,.15);
+  animation:unroll 1.15s cubic-bezier(.2,.8,.2,1);
+  overflow:hidden;
   display:flex;
-
   align-items:center;
   justify-content:center;
-
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      90deg,
-      #e9dbb9,
-      #fff8e8 12%,
-      #f8efd9 88%,
-      #e4d1a8
-    );
-
-  box-shadow:
-    0 22px 45px
-    rgba(60,41,24,.15);
-
-  animation:
-    unroll 1.15s
-    cubic-bezier(.2,.8,.2,1);
 }
 
 @keyframes unroll{
   0%{
     height:20px;
-
     opacity:.5;
-
     transform:scaleX(.82);
   }
 
   100%{
-    height:54vh;
-
+    height:58vh;
     opacity:1;
-
     transform:scaleX(1);
   }
 }
@@ -797,62 +773,29 @@ header small{
 ========================================================= */
 
 .vertical-question{
-  height:45vh;
-  max-height:470px;
-
+  height:48vh;
+  max-height:520px;
   display:flex;
-
   flex-direction:row;
-
   justify-content:center;
   align-items:flex-start;
-
   direction:rtl;
-
-  gap:2vw;
-
+  gap:2.2vw;
   padding:3vh 2vw;
 }
 
 .vcol{
   display:flex;
   flex-direction:column;
-
   align-items:center;
-
   white-space:nowrap;
-
-  font-family:
-    "KaiTi",
-    "STKaiti",
-    "Kaiti SC",
-    "DFKai-SB",
-    serif;
-
-  font-size:
-    clamp(32px,2.5vw,44px);
-
+  font-family:"LXGW WenKai TC","KaiTi","STKaiti","Kaiti SC","DFKai-SB",serif;
+  font-size:clamp(42px,3vw,56px);
   line-height:1;
-}
-
-.vcol span{
-  display:block;
-
-  min-height:1.08em;
-}
-
-.vcol .punct{
-  font-size:.86em;
-
-  line-height:1;
-
-  margin-top:.03em;
 }
 
 .vcol.c0{
-  font-size:
-    clamp(24px,2vw,32px);
-
+  font-size:clamp(30px,2.2vw,40px);
   margin-top:0;
 }
 
