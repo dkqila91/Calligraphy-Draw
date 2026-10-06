@@ -65,3 +65,150 @@ aside button:disabled{opacity:.35;cursor:not-allowed}
   font-size:22px;
   cursor:pointer;
 }
+
+/* ===== FIT FULLSCREEN 16:9 ===== */
+
+html,
+body,
+#root{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+body{
+  margin:0;
+}
+
+/* setiap page muat tepat satu viewport */
+.splash,
+.draw{
+  width:100vw;
+  height:100vh;
+  min-height:100vh;
+  overflow:hidden;
+}
+
+.home,
+.final{
+  width:100vw;
+  height:calc(100vh - 100px);
+  min-height:calc(100vh - 100px);
+  overflow:hidden;
+}
+
+/* tajuk kategori */
+.group-title b{
+  font-size:clamp(42px,4vw,64px);
+}
+
+.group-title span{
+  font-size:clamp(20px,2vw,28px);
+}
+
+/* screen sebelum cabutan */
+.ready h2,
+.shuffle h2{
+  font-size:clamp(36px,3.5vw,58px);
+}
+
+/* mohor */
+.seal{
+  width:min(200px,18vh);
+  height:min(200px,18vh);
+  margin:3vh auto 2vh;
+}
+
+.seal span{
+  font-size:clamp(68px,9vh,105px);
+}
+
+/* lima scroll */
+.scrolls{
+  margin:4vh auto 3vh;
+  gap:1.5vw;
+}
+
+.scroll{
+  width:min(180px,10vw);
+  height:min(360px,38vh);
+}
+
+.scroll b{
+  font-size:clamp(48px,5vw,75px);
+}
+
+/* scroll keputusan */
+.winner-scroll{
+  width:min(720px,55vw);
+  height:54vh;
+  max-height:590px;
+}
+
+@keyframes unroll{
+  0%{
+    height:20px;
+    opacity:.5;
+    transform:scaleX(.82);
+  }
+
+  100%{
+    height:54vh;
+    max-height:590px;
+    opacity:1;
+    transform:scaleX(1);
+  }
+}
+
+/* kandungan puisi */
+.vertical-question{
+  height:45vh;
+  max-height:470px;
+  padding:3vh 2vw;
+  gap:2vw;
+}
+
+.vcol{
+  font-size:clamp(32px,2.5vw,44px);
+}
+
+.vcol.c0{
+  font-size:clamp(24px,2vw,32px);
+  margin-top:0;
+}
+
+.final{
+  padding-top:2vh;
+}
+
+.final h2{
+  font-size:clamp(32px,3vw,48px);
+  margin:1vh 0 2vh;
+}
+
+.final-grid{
+  height:68vh;
+  gap:2vw;
+}
+
+.final-panel{
+  height:100%;
+  overflow:hidden;
+  padding:1vh 1vw;
+}
+
+.vertical-question.compact{
+  height:52vh;
+  max-height:none;
+  padding:1vh;
+  gap:1.4vw;
+}
+
+.compact .vcol{
+  font-size:clamp(27px,2vw,34px);
+}
+
+.compact .vcol.c0{
+  font-size:clamp(21px,1.65vw,28px);
+  margin-top:0;
+}
